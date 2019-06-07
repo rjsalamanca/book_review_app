@@ -1,0 +1,47 @@
+<h5 class="title is-5">${book.title}</h5>
+<h6 class="subtitle is-6">By: ${book.author}</h6>
+<hr/>
+${allBookReviews.map(singleReview =>
+    `
+    <div>
+        <p><b>Reviewed By: ${singleReview.first_name}</b></p>
+        <p><b>Scored: ${singleReview.score}/5</b></p>
+        <br/>
+        <p class='p'>${singleReview.review}</p>
+    </div>
+    <hr/>
+    `
+).join('')}
+
+${is_logged_in === true? 
+    `
+    <form action="/books/${book.id}" method='POST'>
+        <textarea class='textarea' rows="4" cols="50" name="review" placeholder="Leave a review..."></textarea>
+        <br/>
+        Score:
+            <label>
+                <input class='radio' type="radio" name="score" value="1">1
+            </label>
+            <label>
+                <input class='radio' type="radio" name="score" value="2">2
+            </label>
+            <label>
+                <input class='radio' type="radio" name="score" value="3">3
+            </label>
+            <label>
+                <input class='radio' type="radio" name="score" value="4">4
+            </label>
+            <label>
+                <input class='radio' type="radio" name="score" value="5">5
+            </label>
+        <br/>
+        <br/>
+
+        <button name='id' class='button is-primary' value=${book.id} type="submit">submit</button>
+    </form>
+    `
+: 
+`
+    <h5 class='title is-5'>Please <a href="/users/login">Login</a> to review</h5>
+`
+}

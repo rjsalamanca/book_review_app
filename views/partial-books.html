@@ -1,1 +1,6 @@
-BOOKS GO HERE
+${allBooks.map(book=>
+    `
+        <h5 class='title is-5'><a href="/books/${book.id}">${book.title} - By: ${book.author}</a></h5>
+        <hr/>
+    `
+).join('')}

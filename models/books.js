@@ -9,9 +9,8 @@ class Books {
 
 
     static async getAll(){
-        const query = `SELECT * FROM books`;
         try{
-            const response = await db.result(query);
+            const response = await db.any(`SELECT * FROM books`);
             return response;
         } catch(err){
             return err.message;
@@ -30,9 +29,9 @@ class Books {
     async getOneBookReviews(){
         try{
             const response = await db.any(`
-                SELECT BOOK.id, BOOK.name, REV.context, REV.score,  U.first_name
+                SELECT BOOK.id, BOOK.title, REV.review, REV.score,  U.first_name
                 FROM books AS BOOK, reviews AS REV,  users AS U
-                WHERE REV.book_id = $1 AND BOOK.id = $1 AND REV.userid = U.id ORDER BY BOOK.id`, [this.id]);
+                WHERE REV.book_id = $1 AND BOOK.id = $1 AND REV.user_id = U.id ORDER BY BOOK.id`, [this.id]);
             return response;
         } catch(err){
             return err.message;
@@ -42,22 +41,13 @@ class Books {
     async addReview(score,review,userID){
         try{
             const response = await db.any(
-                `INSERT INTO reviews (score, context, restaurant_id, userid) 
-                VALUES ($1,$2,$3,$4)`,[score,review,this.id,userID]
+                `INSERT INTO reviews (review, score, book_id, user_id) 
+                VALUES ($1,$2,$3,$4)`,[review, score, this.id, userID]
             );
             return response;
         } catch(err){
             return err.message;
         }
-    }
-}
-
-async function getQuery(query){
-    try{
-        const response = await db.result(query);
-        return response;
-    } catch(err){
-        return err.message;
     }
 }
 
