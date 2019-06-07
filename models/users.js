@@ -47,6 +47,18 @@ class Users {
         }
     }
 
+    async getOneUserReviews(){
+        try{
+            const response = await db.any(`
+                SELECT BOOK.id, BOOK.title, BOOK.author, REV.review, REV.score, U.id
+                FROM books AS BOOK, reviews AS REV,  users AS U
+                WHERE REV.user_id = $1 AND U.id = $1 AND BOOK.id = REV.book_id ORDER BY BOOK.id`, [this.id]);
+            return response;
+        } catch(err){
+            return err.message;
+        }
+    }
+
     async login(){
         try{
             const response = await db.one(`

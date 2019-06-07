@@ -1,10 +1,21 @@
 ${is_logged_in === true ?
     `
-        <b>Welcome ${userInfo.first_name}</b>
+        <h2 class='title is-2'>Welcome ${userInfo.first_name}</h2>
         <br><br><br>
 
-        <h2 class='h2'>Your current reviews:</h2>
-    
+        <h4 class='title is-4'>Your current reviews:</h4>
+        <hr/>
+        ${userReviews.map(review => 
+            `
+            <div>
+                <h5 class='title is-5'>${review.title}</h5>
+                <h6 class='title is-6'>Your Rating: ${review.score}/5</h6>
+                <p class='p is-medium'>${review.review}</p>
+            </div>
+            <hr/>
+            `
+            ).join('')
+        }
     `
 : 
     `Please login`

@@ -5,6 +5,7 @@ const express = require('express'),
     cookieParser = require('cookie-parser'),
     logger = require('morgan'),
     indexRouter = require('./routes/index'),
+    bookRouter = require('./routes/books'),
     usersRouter = require('./routes/users');
 
 app = express();
@@ -25,6 +26,7 @@ app.use(session({
 }));''
 
 app.use('/', indexRouter);
+app.use('/books', bookRouter);
 app.use('/users', usersRouter);
 
 module.exports = app;

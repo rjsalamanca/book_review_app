@@ -30,9 +30,9 @@ class Books {
     async getOneBookReviews(){
         try{
             const response = await db.any(`
-                SELECT REST.id, REST.name, REV.context, REV.score,  U.first_name
-                FROM books AS REST, reviews AS REV,  users AS U
-                WHERE REV.restaurant_id = $1 AND REST.id = $1 AND REV.userid = U.id ORDER BY REST.id`, [this.id]);
+                SELECT BOOK.id, BOOK.name, REV.context, REV.score,  U.first_name
+                FROM books AS BOOK, reviews AS REV,  users AS U
+                WHERE REV.book_id = $1 AND BOOK.id = $1 AND REV.userid = U.id ORDER BY BOOK.id`, [this.id]);
             return response;
         } catch(err){
             return err.message;
