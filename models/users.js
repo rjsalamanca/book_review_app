@@ -20,10 +20,10 @@ class Users {
         }
     }
 
-    static async getAll(){
-        const query = `SELECT * FROM users`;
+    async getUserInfo(){
         try{
-            const response = await db.result(query);
+            const response = await db.one(`SELECT id, first_name, last_name, email FROM users WHERE id = $1`,[this.id]);
+            console.log(response)
             return response;
         } catch(err){
             return err.message;

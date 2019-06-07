@@ -1,20 +1,25 @@
 const express = require('express'),
     router = express.Router(),
     Users = require('../models/users'),
+    Books = require('../models/books')
     bcrypt = require('bcryptjs');
 
 router.get('/', async (req, res, next) => {
-  const getUsers = await Users.getAll();
-  
+
+  const userInstance = new Users(req.session.user_id,null, null,null,null);
+  const getUserInfo = await userInstance.getUserInfo();
+
+  const bookInstance = new Books();
+
   res.render('template', {
-      locals: {
-          title: 'Users Page',
-          allUsers: getUsers.rows,
-          is_logged_in:req.session.is_logged_in
-      },
-      partials: {
-            partial: 'partial-users'
-      }
+    locals: {
+      title: 'Users Page',
+      userInfo: getUserInfo,
+      is_logged_in: req.session.is_logged_in
+    },
+    partials: {
+      partial: 'partial-users'
+    }
   });
 });
 
@@ -43,7 +48,7 @@ router.post('/login', async (req,res) =>{
       req.session.user_id = response.id;
 
       console.log('CORRECT PW!');
-      res.redirect('/');
+      res.redirect('/users');
   }catch(err){
       console.log('WRONG PW!')
       res.redirect('/users/signup');

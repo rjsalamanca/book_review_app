@@ -8,6 +8,20 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
 </head>
 <body id='body'>
+    <nav class="navbar main-nav is-dark" role="navigation" aria-label="main navigation">
+        <div class="navbar-start">
+        <a class="navbar-item" href='/'>Home</a>
+        </div>
+        ${!!is_logged_in ? `
+            <div class="navbar-end">
+                <a class="navbar-item" href="/users/logout">Logout</a>
+            </div>
+        ` : ` 
+            <div class="navbar-end">
+                <a class="navbar-item" href="/users/login">Login</a>
+            </div>
+        `}
+    </nav>
     <h1 class='title'>${title}</h1>
     <main class='container'>${partial}</main>
 </body>

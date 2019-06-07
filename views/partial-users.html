@@ -1,1 +1,11 @@
-HEY 
+${is_logged_in === true ?
+    `
+        <b>Welcome ${userInfo.first_name}</b>
+        <br><br><br>
+
+        <h2 class='h2'>Your current reviews:</h2>
+    
+    `
+: 
+    `Please login`
+}
