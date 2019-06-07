@@ -23,6 +23,7 @@ app.use(session({
     saveUninitialized: true,
     is_logged_in: false
 }));''
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
