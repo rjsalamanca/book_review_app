@@ -1,15 +1,14 @@
 const Users = require('../models/users'),
     bcrypt = require('bcryptjs');
 
-
 ///////////////
 // PAGE GETS //
 ///////////////
 
 exports.user_page_get = async (req, res) => {
-    const userInstance = new Users(req.session.user_id,null, null,null,null);
-    const getUserInfo = await userInstance.getUserInfo();
-    const getAllUserReviews = await userInstance.getOneUserReviews();
+    const userInstance = new Users(req.session.user_id,null, null,null,null),
+        getUserInfo = await userInstance.getUserInfo(),
+        getAllUserReviews = await userInstance.getOneUserReviews();
 
     res.render('template', {
         locals: {
@@ -59,12 +58,12 @@ exports.logout = (req,res) =>{
 ////////////////
 
 exports.login_page_post =  async (req,res) =>{
-    const { email, password } = req.body
-
-    const userInstance = new Users(null, null, null, email, password);
+    const { email, password } = req.body,
+        userInstance = new Users(null, null, null, email, password);
 
     try{
         let response = await userInstance.login();
+
         req.session.is_logged_in = true;
         req.session.first_name = response.first_name;
         req.session.last_name = response.last_name;
@@ -79,10 +78,10 @@ exports.login_page_post =  async (req,res) =>{
 }
 
 exports.sign_up_post = async (req,res) =>{
-    const { first_name, last_name, email, password} = req.body
-    const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(password, salt)
-    const userInstance = new Users(null, first_name, last_name, email, hash);
+    const { first_name, last_name, email, password} = req.body,
+        salt = bcrypt.genSaltSync(10),
+        hash = bcrypt.hashSync(password, salt),
+        userInstance = new Users(null, first_name, last_name, email, hash);
 
     let check = await userInstance.checkIfCreated();
 
