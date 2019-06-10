@@ -16,4 +16,28 @@ exports.user_page_get = async (req, res) => {
             partial: 'partial-users'
         }
     });
-}  
+}
+
+exports.login_page_get = (req,res) => {
+    res.render('template', {
+        locals:{
+            title: 'Login Page',
+            is_logged_in:req.session.is_logged_in
+        },
+        partials: {
+            partial: 'partial-login-form'
+        }
+    });
+}
+
+exports.sign_up_get = (req,res) => {
+    res.render('template', {
+        locals:{
+            title: 'Sign Up Page',
+            is_logged_in:req.session.is_logged_in
+        },
+        partials: {
+            partial: 'partial-signup-form'
+        }
+    });
+}

@@ -7,18 +7,10 @@ const express = require('express'),
 
 // Gets
 router.get('/', userController.user_page_get);
-router.get('/login', (req,res) =>{
-  res.render('template', {
-    locals:{
-      title: 'Login Page',
-        is_logged_in:req.session.is_logged_in
-      },
-      partials: {
-        partial: 'partial-login-form'
-      }
-  });
-});
+router.get('/login', userController.login_page_get);
+router.get('/signup', userController.sign_up_get);
 
+//Posts
 router.post('/login', async (req,res) =>{
   const { email, password } = req.body
 
@@ -37,19 +29,6 @@ router.post('/login', async (req,res) =>{
       console.log('WRONG PW!')
       res.redirect('/users/signup');
   }
-});
-
-
-router.get('/signup', (req,res) =>{
-  res.render('template', {
-    locals:{
-      title: 'Sign Up Page',
-      is_logged_in:req.session.is_logged_in
-    },
-    partials: {
-      partial: 'partial-signup-form'
-    }
-  });
 });
 
 router.post('/signup', async (req,res) =>{
